@@ -1,8 +1,8 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "MD88",
-        "author": "(c) 2013-2017 Juan Alcon, Ivan Arroyo, Pedro Muñoz, Alfredo Torrado"
+        "icao": "B748",
+        "author": "Supercritical Simulations Group "
     },
     "speed": {
         "taxi": -1
@@ -58,64 +58,39 @@
             }
         },
         {
-            "template": "Approach speed (Vapp)",
-            "replace": {
-                "$VAPP": "$Rotate/md80/autopilot/at_target_speed",
-                "$KIAS": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot"
-            }
-        },
-        {
             "template": "Flaps",
             "replace": {
-                "$FLAPSCONDITION": "$Rotate/md80/systems/flap_handle_position_ratio > 0.95 or ($Rotate/md80/systems/flap_handle_position_ratio >= 0.7 and $Rotate/md80/systems/flap_handle_position_ratio <= 0.8)",
+                "$FLAPSCONDITION": "$sim/cockpit2/controls/flap_handle_deploy_ratio >= 0.95 or ($sim/cockpit2/controls/flap_handle_deploy_ratio >= 0.75 and $sim/cockpit2/controls/flap_handle_deploy_ratio <= 0.9)",
                 "$FLAPSTEXT": "25/30"
             }
         },
         {
             "template": "Gear",
             "replace": {
-                "$CONDITION": "$Rotate/md80/misc/gear_handle == 1"
+                "$CONDITION": "$sim/cockpit/switches/gear_handle_status == 1"
             }
         },
         {
             "template": "Speedbrake",
             "replace": {
-                "$CONDITION": "$Rotate/md80/systems/speedbrake_position == -1"
+                "$CONDITION": "$sim/cockpit2/controls/speedbrake_ratio < -0.1"
             }
         },
         {
             "template": "Autoflight",
             "replace": {
-                "$CONDITION": "$Rotate/md80/autopilot/ap_toggle != 2"
+                "$CONDITION": "$sim/cockpit/autopilot/autopilot_mode < 2"
             }
         },
         {
             "template": "No Tailstrike",
             "replace": {
-                "$TAILSTRIKEPITCH": "12.0",
+                "$TAILSTRIKEPITCH": "11.0",
                 "$CAUTIONPITCH": "9.0"
             }
         },
         {
             "template": "Wind limits"
-        },
-        {
-            "name": "Ignition System",
-            "requirements": [
-                {
-                    "name": "Ignition switch not in OVRD position",
-                    "type": 2,
-                    "primaryCondition": "$Rotate/md80/engines/igniter_switch == 4",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TAXI",
-                    "tolerance": 500,
-                    "description": "Ignition switch must be in position OVRD below check height"
-                }
-            ],
-			"description" : {
-				"type" : "aircraft",
-				"text" : "Ignition must be in OVRD before reaching check height"
-			}
         }
     ]
 }

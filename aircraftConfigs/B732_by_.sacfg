@@ -1,7 +1,7 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "B722",
+        "icao": "B732",
         "author": ""
     },
     "speed": {
@@ -86,7 +86,7 @@
         {
             "template": "Autoflight",
             "replace": {
-                "$CONDITION": "$FJS/727/autopilot/AP_Lever == 0"
+                "$CONDITION": "$FJS/732/Autopilot/APPitchEngageSwitch == 0"
             }
         },
         {

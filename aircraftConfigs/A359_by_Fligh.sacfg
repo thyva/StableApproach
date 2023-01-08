@@ -11,15 +11,15 @@
     "replace_dref": [
         {
             "old": "sim/cockpit/radios/nav1_freq_hz",
-            "new": "airbus_qpac/pfdoutputs/general/ils_frequency"
+            "new": "toliss_airbus/pfdoutputs/general/ils_frequency"
         },
         {
             "old": "sim/cockpit/radios/nav1_hdef_dot",
-            "new": "AirbusFBW/LOCvalCapt"
+            "new": "AirbusFBW/ILS1LocRaw"
         },
         {
             "old": "sim/cockpit/radios/nav1_vdef_dot",
-            "new": "AirbusFBW/GSvalCapt"
+            "new": "AirbusFBW/ILS1GSRaw"
         }
     ],
     "checkHeights": [
@@ -61,19 +61,19 @@
         {
             "template": "Glideslope deviation",
             "replace": {
-                "$VDOT": "$AirbusFBW/GSvalCapt"
+                "$VDOT": "$AirbusFBW/ILS1GSRaw"
             }
         },
         {
             "template": "Localizer deviation",
             "replace": {
-                "$HDOT": "$AirbusFBW/LOCvalCapt"
+                "$HDOT": "$AirbusFBW/ILS1LocRaw"
             }
         },
         {
-            "template": "Approach speed (Vapp)",
+            "template": "Approach speed (Vref)",
             "replace": {
-                "$VAPP": "$1-sim/fms/perf/vapp",
+                "$VREF": "$AirbusFBW/VLS",
                 "$KIAS": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot"
             }
         },
@@ -87,7 +87,7 @@
         {
             "template": "Gear",
             "replace": {
-                "$CONDITION": "$model/controls/gearc == 1 and $model/controls/gearl == 1 and $model/controls/gearr == 1"
+                "$CONDITION": "$sim/cockpit/switches/gear_handle_status == 1"
             }
         },
         {

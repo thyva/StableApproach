@@ -2,7 +2,7 @@
     "enabled": true,
     "acf": {
         "icao": "DH8D",
-        "author": ""
+        "author": "FlyJSim"
     },
     "speed": {
         "taxi": -1
@@ -74,17 +74,10 @@
             }
         },
         {
-            "name": "Autoflight",
-            "requirements": [
-                {
-                    "name": "Autoland not allowed",
-                    "type": 2,
-                    "primaryCondition": "$sim/cockpit/autopilot/autopilot_mode < 2",
-                    "beginConditionMarker": "#TD-3000ms",
-                    "endConditionMarker": "#TD+3000ms",
-                    "description": "Autoland is not allowed with this aircraft"
-                }
-            ]
+            "template": "No autoland",
+            "replace": {
+                "$CONDITION": "$sim/cockpit/autopilot/autopilot_mode < 2"
+            }
         },
         {
             "template": "No Tailstrike",
@@ -107,7 +100,11 @@
                     "tolerance": 1000,
                     "description": "Fuel pumps must be ON"
                 }
-            ]
+            ],
+			"description" : {
+				"type" : "aircraft",
+				"text" : "Fuel pumps must be ON before reaching check height"
+			}
         },
         {
             "requirements": [
@@ -120,7 +117,11 @@
                     "tolerance": 1000,
                     "description": "PROP lever muss be full forward"
                 }
-            ]
+            ],
+			"description" : {
+				"type" : "aircraft",
+				"text" : "Prop lever must be full forward before reaching check height"
+			}
         }
     ]
 }

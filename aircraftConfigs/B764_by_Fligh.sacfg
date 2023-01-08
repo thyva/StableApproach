@@ -1,7 +1,7 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "B763",
+        "icao": "B764",
         "author": "FlightFactor and StepToSky"
     },
     "speed": {
@@ -61,13 +61,13 @@
         {
             "template": "Glideslope deviation",
             "replace": {
-                "$VDOT": "$sim/cockpit/radios/nav1_vdef_dot"
+                "$VDOT": "$sim/cockpit/radios/nav2_vdef_dot"
             }
         },
         {
             "template": "Localizer deviation",
             "replace": {
-                "$HDOT": "$sim/cockpit/radios/nav1_hdef_dot"
+                "$HDOT": "$sim/cockpit/radios/nav2_hdef_dot"
             }
         },
         {
@@ -117,7 +117,11 @@
                     "tolerance": 3000,
                     "description": "This only applies if VREF has NOT been set in the CDU:\nSpeed during approach must be between:\nVapp-5\n  and\nVapp + 10"
                 }
-            ]
+            ],
+			"description" : {
+				"type" : "aircraft",
+				"text" : "Set Vref in FMC.\nKeep approach speed between Vref-0 and Vref+15\nApproach speed is normally Vref+5.\nFluctuations in airspeed due to turbulence are acceptable"
+			}
         },
         {
             "template": "Flaps",

@@ -9,15 +9,18 @@
     },
     "autoUpdate": true,
     "replace_dref": [],
+	"description" : {
+		"text" : "This profile only works with the Zibo/LevelUp 737NG.\nThe 'default' 737-800 by Laminar will NOT work properly."
+	},
     "checkHeights": [
         {
-            "template":"IMC"
+            "template": "IMC"
         },
         {
-            "template":"VMC"
+            "template": "VMC"
         },
         {
-            "template":"VISUAL"
+            "template": "VISUAL"
         }
     ],
     "requirementGroups": [
@@ -58,69 +61,30 @@
             }
         },
         {
-            "name": "Approach speed",
-            "requirements": [
-                {
-                    "name": "Vref not set",
-                    "type": 2,
-                    "primaryCondition": "$laminar/B738/FMS/vref > 50",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TD-3000ms",
-                    "description": "Approach VREF should be set in the CDU"
-                },
-                {
-                    "name": "Approach speed",
-                    "type": 2,
-                    "primaryCondition": "($laminar/B738/FMS/vref - 3) <= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot\nand\n($laminar/B738/FMS/vref + 20) >= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "$.ft_ARTE < 100",
-                    "tolerance": 3000,
-                    "description": "Speed during approach must be between:\nVREF\n  and\nVREF + 15"
-                },
-                {
-                    "name": "Approach speed",
-                    "type": 1,
-                    "primaryCondition": "($laminar/B738/FMS/vref ) <= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot\nand\n($laminar/B738/FMS/vref + 15) >= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "$.ft_ARTE < 100",
-                    "tolerance": 3000,
-                    "description": "Speed during approach must be between:\nVREF\n  and\nVREF + 15"
-                }
-            ]
+            "template": "Approach speed (Vref/FMC)",
+            "replace": {
+                "$VREF": "$laminar/B738/FMS/vref",
+                "$KIAS": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot"
+            }
         },
         {
             "template": "Gear",
-            "replace": 
-              {
-              "$CONDITION":"$sim/cockpit2/controls/gear_handle_down == 1 and $sim/cockpit2/annunciators/gear_unsafe == 0"
-              }          
+            "replace": {
+                "$CONDITION": "$sim/cockpit2/controls/gear_handle_down == 1 and $sim/cockpit2/annunciators/gear_unsafe == 0"
+            }
         },
         {
-            "name": "Flaps",
-            "replace": [
-                {
-                    "name": "Flaps not in position",
-                    "type": 2,
-                    "primaryCondition": "$laminar/B738/flap_indicator#0 > 45 or ($laminar/B738/flap_indicator#0 > 30 and $laminar/B738/flap_indicator#0 < 36)",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TD_LAST",
-                    "description": "Flaps must be in landing position (30/40) below check height until taxi speed"
-                },
-                {
-                    "name": "FMC/Flap disagree",
-                    "type": 2,
-                    "primaryCondition": "$laminar/B738/FMS/approach_flaps_set == 1",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TD-3000ms",
-                    "tolerance": 1000,
-                    "description": "Landing flap selection in FMC (APPROACH REF page) does not match used flap position."
-                }
-            ]
+            "template": "Flaps (FMC)",
+            "replace": {
+                "$FLAPSCONDITION": "$laminar/B738/flap_indicator#0 > 45 or ($laminar/B738/flap_indicator#0 > 30 and $laminar/B738/flap_indicator#0 < 36)",
+                "$FLAPFMCCONDITION": "$laminar/B738/FMS/approach_flaps_set == 1",
+				"$FLAPSTEXT": "30/40"
+            }
         },
         {
             "template": "Speedbrake",
             "replace": {
-	    		"$CONDITION": "$laminar/B738/annunciator/speedbrake_armed > 0.1 and $laminar/B738/annunciator/speedbrake_extend = 0"
+                "$CONDITION": "$laminar/B738/annunciator/speedbrake_armed > 0.1 and $laminar/B738/annunciator/speedbrake_extend = 0"
             }
         },
         {
@@ -136,25 +100,29 @@
                     "tolerance": 500,
                     "description": "Engine start switches must be in position\nCONT below check height"
                 }
-            ]
+            ],
+			"description" : {
+				"type" : "aircraft",
+				"text" : "ENGINE START switches must be in CONT or AUTO (as equipped)"
+			}
         },
         {
             "template": "Autoflight",
             "replace": {
-	    		"$CONDITION": "$laminar/autopilot/ap_on == 0"
+                "$CONDITION": "$laminar/autopilot/ap_on == 0"
             }
         },
         {
             "template": "Thrust",
             "replace": {
-	    		"$N1": "$laminar/B738/engine/indicators/N1_percent_1"
+                "$N1": "$laminar/B738/engine/indicators/N1_percent_1"
             }
         },
         {
             "template": "No Tailstrike",
             "replace": {
-	    		"$TAILSTRIKEPITCH": "12.4",
-	    		"$CAUTIONPITCH": "9.0"
+                "$TAILSTRIKEPITCH": "12.4",
+                "$CAUTIONPITCH": "9.0"
             }
         },
         {
