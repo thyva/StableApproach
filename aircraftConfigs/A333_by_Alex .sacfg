@@ -1,8 +1,8 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "A320",
-        "author": "FlightFactor"
+        "icao": "A333",
+        "author": "Alex Unruh, Rodrigo Fernandez, Massimo Durando, Jim Gregory"
     },
     "speed": {
         "taxi": -1
@@ -58,19 +58,23 @@
             }
         },
         {
-            "template": "Approach speed"
+            "template": "Approach speed (Vref)",
+            "replace": {
+                "$VREF": "$sim/cockpit2/gauges/actuators/airspeed_bugs#3",
+                "$KIAS": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot"
+            }
         },
         {
             "template": "Flaps",
             "replace": {
-                "$FLAPSCONDITION": "$model/controls/flaps_lever > 0.95 or ($model/controls/flaps_lever >= 0.7 and $model/controls/flaps_lever <= 0.8)",
+                "$FLAPSCONDITION": "$sim/cockpit2/controls/flap_system_deploy_ratio == 0.75 or $sim/cockpit2/controls/flap_system_deploy_ratio == 1",
                 "$FLAPSTEXT": "3 or FULL"
             }
         },
         {
             "template": "Gear",
             "replace": {
-                "$CONDITION": "$sim/flightmodel2/gear/deploy_ratio == 1"
+                "$CONDITION": "$sim/cockpit2/controls/gear_handle_down == 1"
             }
         },
         {
@@ -82,19 +86,11 @@
         {
             "template": "Autoflight",
             "replace": {
-                "$CONDITION": "$sim/cockpit/autopilot/autopilot_mode < 2"
-            }
-        },
-        {
-            "template": "No Tailstrike",
-            "replace": {
-                "$TAILSTRIKEPITCH": "12.8",
-                "$CAUTIONPITCH": "7.8"
+                "$CONDITION": "$laminar/A333/annun/autopilot/ap1_mode == 0 and $laminar/A333/annun/autopilot/ap2_mode == 0"
             }
         },
         {
             "template": "Wind limits"
         }
-
     ]
 }

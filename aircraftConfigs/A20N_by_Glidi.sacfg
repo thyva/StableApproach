@@ -1,14 +1,27 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "A320",
-        "author": "FlightFactor"
+        "icao": "A20N",
+        "author": "Gliding Kiwi"
     },
     "speed": {
         "taxi": -1
     },
     "autoUpdate": true,
-    "replace_dref": [],
+    "replace_dref": [
+        {
+            "old": "sim/cockpit/radios/nav1_freq_hz",
+            "new": "toliss_airbus/pfdoutputs/general/ils_frequency"
+        },
+        {
+            "old": "sim/cockpit/radios/nav1_hdef_dot",
+            "new": "AirbusFBW/ILS1LocRaw"
+        },
+        {
+            "old": "sim/cockpit/radios/nav1_vdef_dot",
+            "new": "AirbusFBW/ILS1GSRaw"
+        }
+    ],
     "checkHeights": [
         {
             "template": "IMC"
@@ -48,29 +61,33 @@
         {
             "template": "Glideslope deviation",
             "replace": {
-                "$VDOT": "$sim/cockpit/radios/nav1_vdef_dot"
+                "$VDOT": "$AirbusFBW/ILS1GSRaw"
             }
         },
         {
             "template": "Localizer deviation",
             "replace": {
-                "$HDOT": "$sim/cockpit/radios/nav1_hdef_dot"
+                "$HDOT": "$AirbusFBW/ILS1LocRaw"
             }
         },
         {
-            "template": "Approach speed"
+            "template": "Approach speed (Vref)",
+            "replace": {
+                "$VREF": "$toliss_airbus/pfdoutputs/general/VLS_value",
+                "$KIAS": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot"
+            }
         },
         {
             "template": "Flaps",
             "replace": {
-                "$FLAPSCONDITION": "$model/controls/flaps_lever > 0.95 or ($model/controls/flaps_lever >= 0.7 and $model/controls/flaps_lever <= 0.8)",
+                "$FLAPSCONDITION": "($AirbusFBW/FlapLeverRatio >= 0.70 and $AirbusFBW/FlapLeverRatio <= 0.80) or $AirbusFBW/FlapLeverRatio >= 0.95",
                 "$FLAPSTEXT": "3 or FULL"
             }
         },
         {
             "template": "Gear",
             "replace": {
-                "$CONDITION": "$sim/flightmodel2/gear/deploy_ratio == 1"
+                "$CONDITION": "$AirbusFBW/RightGearInd == 2 and $AirbusFBW/LeftGearInd == 2 and $AirbusFBW/NoseGearInd == 2"
             }
         },
         {
@@ -82,7 +99,7 @@
         {
             "template": "Autoflight",
             "replace": {
-                "$CONDITION": "$sim/cockpit/autopilot/autopilot_mode < 2"
+                "$CONDITION": "$AirbusFBW/AP1Engage == 0 and $AirbusFBW/AP2Engage == 0"
             }
         },
         {
