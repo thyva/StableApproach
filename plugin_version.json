@@ -14,7 +14,7 @@
       }
     },
     "aircraft_profiles":{
-      "use_custom": true,
+      "use_custom": false,
       "revert_to_default": true
     }
   }
