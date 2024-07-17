@@ -73,7 +73,7 @@
         {
             "template": "Approach speed (Vref)",
             "replace": {
-                "$VREF": "$AirbusFBW/VLS",
+                "$VREF": "$1-sim/fms/perf/vls",
                 "$KIAS": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot"
             }
         },
